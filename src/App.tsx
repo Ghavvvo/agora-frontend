@@ -1,37 +1,20 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import Products from "./pages/Products";
-import Categories from "./pages/Categories";
-import Sales from "./pages/Sales";
-import Inventory from "./pages/Inventory";
-import CashClosing from "./pages/CashClosing";
-import NotFound from "./pages/NotFound";
-
-const queryClient = new QueryClient();
+import { Toaster } from "@/shared/components/ui/toaster";
+import { Toaster as Sonner } from "@/shared/components/ui/sonner";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
+import { BrowserRouter } from "react-router-dom";
+import { ReactQueryProvider } from "@/app/providers/ReactQueryProvider";
+import { AppRoutes } from "@/app/router";
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <ReactQueryProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/productos" element={<Products />} />
-          <Route path="/categorias" element={<Categories />} />
-          <Route path="/ventas" element={<Sales />} />
-          <Route path="/inventario" element={<Inventory />} />
-          <Route path="/cierre-caja" element={<CashClosing />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppRoutes />
       </BrowserRouter>
     </TooltipProvider>
-  </QueryClientProvider>
+  </ReactQueryProvider>
 );
 
 export default App;
