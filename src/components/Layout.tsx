@@ -28,8 +28,8 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="flex min-h-screen w-full bg-background">
       {/* Sidebar */}
       <aside className="w-64 border-r border-border bg-card">
-        <div className="flex h-16 items-center border-b border-border px-6">
-          <img src={agoraLogo} alt="Ágora" className="h-8" />
+        <div className="flex h-16 items-center justify-center border-b border-border">
+          <img src={agoraLogo} alt="Ágora"  className={"w-3/4 p-8 justify-center items-center"}/>
         </div>
         
         <nav className="space-y-1 p-4">
