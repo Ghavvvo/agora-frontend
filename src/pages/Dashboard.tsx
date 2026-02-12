@@ -9,17 +9,22 @@ import {
   TrendingUp,
   ArrowRight
 } from "lucide-react";
-import { mockProducts, mockSales } from "@/lib/mockData";
+import { useProducts } from "@/features/products";
+import { useCategories } from "@/features/categories";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   
+  // React Query hooks
+  const { data: products = [] } = useProducts();
+  const { data: categories = [] } = useCategories();
+
   // Calculate stats
-  const todaySalesUSD = mockSales.reduce((acc, sale) => acc + sale.totalUSD, 0);
-  const todayServicesMN = mockSales.reduce((acc, sale) => acc + sale.totalMN, 0);
-  const lowStockProducts = mockProducts.filter(p => p.stockActual <= p.stockMinimo);
-  
+  const activeProducts = products.filter(p => p.active);
+  const totalProducts = products.length;
+  const totalCategories = categories.filter(c => c.active).length;
+
   // Mock weekly sales data
   const weekSales = [
     { day: "Lun", usd: 125, mn: 12500 },
@@ -46,31 +51,31 @@ const Dashboard = () => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Ventas Hoy (USD)"
-            value={`$${todaySalesUSD.toFixed(2)}`}
-            subtitle="+12.5% vs ayer"
+            value="$0.00"
+            subtitle="Próximamente"
             icon={DollarSign}
-            trend="up"
+            trend="neutral"
           />
           <StatCard
-            title="Ventas Hoy (MN)"
-            value={`${todayServicesMN.toLocaleString()} MN`}
-            subtitle="+8.2% vs ayer"
+            title="Ventas Hoy (CUP)"
+            value="0 CUP"
+            subtitle="Próximamente"
             icon={DollarSign}
-            trend="up"
+            trend="neutral"
           />
           <StatCard
-            title="Productos Registrados"
-            value={mockProducts.length.toString()}
-            subtitle="En 3 categorías"
+            title="Productos Activos"
+            value={activeProducts.length.toString()}
+            subtitle={`Total: ${totalProducts} productos`}
             icon={Package}
             trend="neutral"
           />
           <StatCard
-            title="Stock Bajo"
-            value={lowStockProducts.length.toString()}
-            subtitle="Requieren atención"
+            title="Categorías"
+            value={totalCategories.toString()}
+            subtitle="Categorías activas"
             icon={AlertTriangle}
-            trend="down"
+            trend="neutral"
           />
         </div>
 
@@ -112,31 +117,8 @@ const Dashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
-                {lowStockProducts.length > 0 ? (
-                  lowStockProducts.map((product) => (
-                    <div
-                      key={product.id}
-                      className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-secondary/50 transition-colors"
-                    >
-                      <div>
-                        <p className="font-medium">{product.nombre}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Stock actual: {product.stockActual} | Mínimo: {product.stockMinimo}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-warning/10 text-warning">
-                          Bajo
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-center text-muted-foreground py-6">
-                    No hay productos con stock bajo
-                  </p>
-                )}
+              <div className="text-center text-muted-foreground py-8">
+                <p>Funcionalidad próximamente disponible</p>
               </div>
             </CardContent>
           </Card>

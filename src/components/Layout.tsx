@@ -5,7 +5,8 @@ import {
   Package, 
   ShoppingCart, 
   Warehouse, 
-  DollarSign 
+  DollarSign,
+  Folder
 } from "lucide-react";
 import agoraLogo from "@/assets/agora-logo.png";
 
@@ -17,6 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
   const navItems = [
     { to: "/", icon: LayoutDashboard, label: "Inicio" },
     { to: "/productos", icon: Package, label: "Productos" },
+    { to: "/categorias", icon: Folder, label: "Categorías" },
     { to: "/ventas", icon: ShoppingCart, label: "Ventas" },
     { to: "/inventario", icon: Warehouse, label: "Inventario" },
     { to: "/cierre-caja", icon: DollarSign, label: "Cierre de Caja" },
